@@ -1,0 +1,25 @@
+services:
+  oracle:
+    build:
+      context: .
+      dockerfile: Containerfile
+    image: ${IMAGE_NAME:-oracle-hr-source:local}
+    container_name: ${CONTAINER_NAME:-oracle-source}
+    ports:
+      - "${ORACLE_PORT:-1521}:1521"
+    shm_size: 1gb
+    env_file:
+      - .env
+    volumes:
+      - oracle-source-data:/opt/oracle/oradata
+      - ./oracle/hr:/opt/oracle/hr:ro
+      - ./oracle/init:/container-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 15s
+      timeout: 10s
+      retries: 40
+      start_period: 600s
+
+volumes:
+  oracle-source-data:

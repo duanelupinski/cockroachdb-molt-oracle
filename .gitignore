@@ -1,0 +1,14 @@
+.env
+.env.example
+*.log
+
+logs/
+
+# Oracle Instant Client for MOLT. Local download only.
+instantclient/
+
+# Oracle-enabled MOLT binaries. Local download only.
+bin/
+
+# Prometheus data directory
+prometheus/data/
